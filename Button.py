@@ -6,10 +6,10 @@ class Button:
     "Creates a Botton object with a rect, and a text"
 
     def __init__(self, x: int, y: int, text: str):
-        self.rect = pygame.Rect(
+        self.rect: pygame.Rect = pygame.Rect(
             x, y, GameSettings.MENU_RECT_WIDTH, GameSettings.MENU_RECT_HEIGHT
         )
-        self.text = text
+        self.text: str = text
 
     def set_font_on_text(self):
         "Sets and renders the text with the given font"
@@ -21,15 +21,15 @@ class Button:
         return text_render
 
     def menu_buttons(self, screen: pygame.Surface):
-        "Renders the text to the Botton rect"
-        text = self.set_font_on_text()
+        "Renders wide Botton rect witn green cube and black text"
+        text: pygame.Surface = self.set_font_on_text()
         pygame.draw.rect(screen, "Green", self.rect)
         screen.blit(text, self.rect)
 
     def narrow_buttons(self, screen: pygame.Surface):
-        "Renders the text to the Botton rect"
-        text_surface = self.set_font_on_text()
-        self.rect.w = max(len(self.text), text_surface.get_width() + 10)
+        "Renders narrow Botton rect"
+        text_surface: pygame.Surface = self.set_font_on_text()
+        self.rect.w = max(len(self.text), text_surface.get_width())
         screen.blit(text_surface, (self.rect.x + 5, self.rect.y + 5))
 
     def area_pressed(

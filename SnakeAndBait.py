@@ -10,9 +10,9 @@ class SnakeII:
 
     def __init__(self, x: int, y: int):
 
-        self.body = [SnakeBody(x, y), SnakeBody(x - GameSettings.SNAKE_WIDTH, y)]
-        self.image_handler = ImageHandlerII()
-        self.score = 1
+        self.body: list[SnakeBody] = [SnakeBody(x, y), SnakeBody(x - GameSettings.SNAKE_WIDTH, y)]
+        self.image_handler: ImageHandlerII = ImageHandlerII()
+        self.score: int = 1
 
     def draw(self, screen: pygame.Surface) -> None:
         "Draws out the body of the snake"
@@ -24,12 +24,12 @@ class SnakeII:
                 self.tail_logic(screen)
 
             else:
-                prevx = self.body[index + 1].rect.x
-                nextx = self.body[index - 1].rect.x
-                prevy = self.body[index + 1].rect.y
-                nexty = self.body[index - 1].rect.y
-                prev_block_x_speed = self.body[index + 1].x_speed
-                prev_block_yspeed = self.body[index + 1].y_speed
+                prevx: int = self.body[index + 1].rect.x
+                nextx: int = self.body[index - 1].rect.x
+                prevy: int = self.body[index + 1].rect.y
+                nexty: int = self.body[index - 1].rect.y
+                prev_block_x_speed: int = self.body[index + 1].x_speed
+                prev_block_yspeed: int = self.body[index + 1].y_speed
 
                 if prevx == nextx:
                     screen.blit(self.image_handler.set_correct_image(self.image_handler.snake_image_path,self.image_handler.body_vertical), object_iterable.rect)
@@ -94,13 +94,13 @@ class SnakeII:
             elif index == len(self.body) - 1:
                 self.second_snake_tail_logic(screen)
             else:
-                prevx = self.body[index + 1].rect.x
-                nextx = self.body[index - 1].rect.x
-                prevy = self.body[index + 1].rect.y
-                nexty = self.body[index - 1].rect.y
+                prevx: int = self.body[index + 1].rect.x
+                nextx: int = self.body[index - 1].rect.x
+                prevy: int = self.body[index + 1].rect.y
+                nexty: int = self.body[index - 1].rect.y
 
-                prev_block_x_speed = self.body[index + 1].x_speed
-                prev_block_y_speed = self.body[index + 1].y_speed
+                prev_block_x_speed: int = self.body[index + 1].x_speed
+                prev_block_y_speed: int = self.body[index + 1].y_speed
 
                 if prevx == nextx:
                     screen.blit(self.image_handler.set_correct_image(self.image_handler.multiplayer_snake_path,self.image_handler.body_vertical),object_iterable.rect)
@@ -203,7 +203,7 @@ class SnakeII:
     def grow(self):
         "Adds +1 score to the snake score and grows the snake by 1 block"
         self.score += 1
-        tail = self.body[-1]
+        tail: SnakeBody  = self.body[-1]
         if tail.x_speed > 0:
             snake_part = SnakeBody(tail.rect.x - GameSettings.SNAKE_WIDTH, tail.rect.y)
             snake_part.x_speed = GameSettings.SNAKE_SPEED
@@ -250,8 +250,8 @@ class Bait:
     "Creates a Bait object for the game"
 
     def __init__(self, x: int, y: int):
-        self.rect = pygame.Rect(x, y, GameSettings.BAIT_WIDTH, GameSettings.BAIT_HEIGHT)
-        self.image = ImageHandlerII()
+        self.rect: pygame.Rect = pygame.Rect(x, y, GameSettings.BAIT_WIDTH, GameSettings.BAIT_HEIGHT)
+        self.image: ImageHandlerII = ImageHandlerII()
 
     def respawn(self, screen: pygame.Surface, snake: SnakeII):
         "Respawns and renders the Bait and checks for the Snake body to avoid collision in single player game mode"
@@ -294,7 +294,7 @@ class Bait:
 
     def collision_with_snake(self, snake: SnakeII):
         "Checks for collisions between snakes in multiplayer mode"
-        apple = self.rect
+        apple: pygame.Rect  = self.rect
         for snake_rect in snake.body:
             if apple.colliderect(snake_rect.rect):
                 self.rect.x = (random.randrange(0, (GameSettings.WIDTH // GameSettings.BAIT_WIDTH))* GameSettings.BAIT_WIDTH)

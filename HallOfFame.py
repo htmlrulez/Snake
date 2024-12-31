@@ -14,22 +14,21 @@ class HallOfFame:
         self.high_score_database_path = (
             Path(__file__).resolve().parent / "Docs" / "snake_High_Score.json"
         )
-        self.font = pygame.font.Font(None, 32)
-        self.image_handler = ImageHandlerII()
+        self.font: pygame.font.Font = pygame.font.Font(None, 32)
+        self.image_handler: ImageHandlerII = ImageHandlerII()
 
     def start(self):
         "Hall Of Fame for the Best player scores"
         self.screen.fill("black")
         self.screen.blit(self.image_handler.hall_of_fame_background_path, (0, 100))
         data = self.reading_json()
-        i = 0
+        i: int = 0
         for key, value in data.items():
             self.fame_creation(
                 GameSettings.HALL_OF_FAME_FIRST_POS_X,
                 GameSettings.HALL_OF_FAME_FIRTS_POS_Y + i,
                 key,
-                value,
-                10,
+                value
             )
             i += 100
         pygame.display.flip()
@@ -37,12 +36,12 @@ class HallOfFame:
     def reading_json(self):
         "Reads from the database"
         with open(self.high_score_database_path, "+r", encoding="utf-8") as f:
-            data = json.load(f)
+            data= json.load(f)
             return data
 
-    def fame_creation(self, x_pos: int, y_pos: int, name: str, score: str, dis: int):
+    def fame_creation(self, x_pos: int, y_pos: int, name: str, score: str):
         "displays the highscore"
         score = str(score)
-        scored_name = name + ": " + score + " Points"
-        fame_name_plate = Button(x_pos, y_pos + dis, scored_name)
+        scored_name: str = name + ": " + score + " points"
+        fame_name_plate = Button(x_pos, y_pos, scored_name)
         fame_name_plate.narrow_buttons(self.screen)

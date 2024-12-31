@@ -10,29 +10,29 @@ class SinglePLayer:
     "SinglePlayer game mode"
 
     def __init__(self, screen: pygame.Surface) -> None:
-        self.image_handler = ImageHandlerII()
-        self.screen = screen
+        self.image_handler: ImageHandlerII = ImageHandlerII()
+        self.screen: pygame.Surface = screen
         self.single_player_loose: Button = Button(
             GameSettings.WIDTH // 2 - 50,
             GameSettings.HEIGHT // 2 - 50,
             "Self Collision Detected",
         )
-        self.bait = Bait(64 * 7, 64 * 8)
-        self.snake = SnakeII(64 * 8, 64 * 8)
-        self.score = Score(self.snake, self.screen)
+        self.bait: Bait = Bait(64 * 7, 64 * 8)
+        self.snake: SnakeII = SnakeII(64 * 8, 64 * 8)
+        self.score: Score = Score(self.snake, self.screen)
 
     def start(self, speed: int):
         "Starts single player snake mode"
 
         turn_pressed: int | None = None
         pygame.time.set_timer(pygame.USEREVENT, speed)
-        running = True
+        running: bool = True
         while running:
-            event = pygame.event.wait()
+            event: pygame.event.Event = pygame.event.wait()
             if event.type == pygame.USEREVENT:
                 if turn_pressed is not None:
                     self.snake.turn(turn_pressed)
-                    turn_pressed = None
+                    turn_pressed: None | int = None
                 self.snake.move()
                 self.snake.body_follow()
                 self.singleplayer_render(self.snake, self.bait, self.score)
@@ -60,6 +60,7 @@ class SinglePLayer:
                 break
 
     def singleplayer_render(self, snake: SnakeII, bait: Bait, score: Score):
+        "Renders snake, bait, score for single player"
         self.screen.blit(self.image_handler.single_player_background_path, (0, 0))
         self.food_collision(snake, bait, self.screen)
         score.display()

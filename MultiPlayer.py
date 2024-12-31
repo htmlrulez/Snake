@@ -13,8 +13,8 @@ class MultiPlayer:
         self,
         screen: pygame.Surface,
     ) -> None:
-        self.image_handler = ImageHandlerII()
-        self.screen = screen
+        self.image_handler: ImageHandlerII = ImageHandlerII()
+        self.screen: pygame.Surface = screen
         self.player_one_victory: Button = Button(
             GameSettings.WIDTH // 2 - 50,
             GameSettings.HEIGHT // 2 - 50,
@@ -25,11 +25,11 @@ class MultiPlayer:
             GameSettings.HEIGHT // 2 - 50,
             "Player Two Won",
         )
-        self.snake_one = SnakeII(63 * 8, 63 * 8)
-        self.snake_two = SnakeII(64 * 10, 64 * 15)
-        self.bait = Bait(64 * 7, 64 * 8)
-        self.player_one_score = Score(self.snake_one, self.screen)
-        self.player_two_score = Score(self.snake_two, self.screen)
+        self.snake_one: SnakeII = SnakeII(64 * 8, 64 * 8)
+        self.snake_two: SnakeII = SnakeII(64 * 10, 64 * 15)
+        self.bait: Bait = Bait(64 * 7, 64 * 8)
+        self.player_one_score: Score = Score(self.snake_one, self.screen)
+        self.player_two_score: Score = Score(self.snake_two, self.screen)
 
     def start(self, speed: int):
         "Starts multiplayer snake mode"
@@ -39,9 +39,9 @@ class MultiPlayer:
 
         pygame.time.set_timer(pygame.USEREVENT, speed)
 
-        running = True
+        running: bool = True
         while running:
-            event = pygame.event.wait()
+            event: pygame.event.Event = pygame.event.wait()
             if event.type == pygame.USEREVENT:
                 if turn1_pressed is not None:
                     self.snake_one.turn(turn1_pressed)
@@ -64,11 +64,9 @@ class MultiPlayer:
                 )
                 if self.snake_one.self_collision():
                     self.player_two_won_the_game()
-                    # return?
 
                 if self.snake_two.self_collision():
                     self.player_one_won_the_game()
-                    # return?
 
                 if self.multiplayer_snake_collision(self.snake_one, self.snake_two):
                     running = False
@@ -98,7 +96,7 @@ class MultiPlayer:
 
     def multiplayer_high_score_text(self, score: int):
         "Multi player score displayer"
-        score_text = Button(
+        score_text: Button = Button(
             GameSettings.MULTI_PLAYER_SCORE_BOX, 0, "High Score: " + str(score)
         )
         score_text.narrow_buttons(self.screen)

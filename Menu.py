@@ -12,8 +12,8 @@ class Menu:
     "Creates the game menu"
 
     def __init__(self):
-        self.screen = pygame.display.set_mode((GameSettings.WIDTH, GameSettings.HEIGHT))
-        self.menu_image_handler = ImageHandlerII()
+        self.screen: pygame.Surface = pygame.display.set_mode((GameSettings.WIDTH, GameSettings.HEIGHT))
+        self.menu_image_handler: ImageHandlerII = ImageHandlerII()
 
         self.single_player_button: Button = Button(
             GameSettings.MENU_SINGLE_PLAYER_BUTTON_X_POS,
@@ -49,7 +49,7 @@ class Menu:
     def select_menu_options(self):
         "Sets up the menu option bars"
 
-        buttons = [
+        buttons: list[Button] = [
             self.single_player_button,
             self.multi_player_button,
             self.settings_button,
@@ -64,15 +64,15 @@ class Menu:
         "Starts the game menu"
         pygame.init()
         self.screen.blit(self.menu_image_handler.basic_background_path, (0, 100))
-        base_speed = GameSettings.SNAKE_GAME_SPEED
-        speed = base_speed
+        base_speed: int = GameSettings.SNAKE_GAME_SPEED
+        speed: int = base_speed
         pygame.display.flip()
         self.select_menu_options()
 
-        menu_screen_running = True
+        menu_screen_running: bool = True
         while menu_screen_running:
-            menu_event = pygame.event.wait()
-            mouse_pressed = pygame.mouse.get_pressed()
+            menu_event: pygame.event.Event = pygame.event.wait()
+            mouse_pressed: tuple[bool, bool, bool] = pygame.mouse.get_pressed()
             if mouse_pressed == GameSettings.RIGHT_CLICK:
                 mouse_x, mouse_y = pygame.mouse.get_pos()
 
@@ -83,20 +83,20 @@ class Menu:
                     GameSettings.MENU_RECT_HEIGHT,
                 ):
 
-                    settings = Settings(self.screen)
+                    settings: Settings = Settings(self.screen)
                     match settings.start():
                         case 25:
                             new_speed: int = 350
-                            speed = new_speed
+                            speed: int = new_speed
                         case 100:
                             new_speed: int = 100
-                            speed = new_speed
+                            speed: int = new_speed
                         case 200:
                             new_speed: int = 50
-                            speed = new_speed
+                            speed: int = new_speed
                         case _:
                             new_speed: int = 100
-                            speed = new_speed
+                            speed: int = new_speed
 
                     self.screen.blit(self.menu_image_handler.basic_background_path, (0, 100))
                     self.select_menu_options()
@@ -107,7 +107,7 @@ class Menu:
                     self.multi_player_button.rect.x - 5,
                     GameSettings.MENU_RECT_HEIGHT,
                 ):
-                    single_player = SinglePLayer(self.screen)
+                    single_player: SinglePLayer = SinglePLayer(self.screen)
                     single_player.start(speed)
                     self.screen.fill("black")
                     self.screen.blit(self.menu_image_handler.basic_background_path, (0, 100))
@@ -119,7 +119,7 @@ class Menu:
                     self.settings_button.rect.x - 10,
                     GameSettings.MENU_RECT_HEIGHT,
                 ):
-                    multi_player = MultiPlayer(self.screen)
+                    multi_player: MultiPlayer = MultiPlayer(self.screen)
                     multi_player.start(speed)
 
                     self.screen.fill("black")
@@ -133,7 +133,7 @@ class Menu:
                     GameSettings.HEIGHT,
                 ):
 
-                    hall_of_fame = HallOfFame(self.screen)
+                    hall_of_fame: HallOfFame = HallOfFame(self.screen)
                     hall_of_fame.start()
                     self.select_menu_options()
 
@@ -143,9 +143,9 @@ class Menu:
                     self.exit_game_button.rect.x + GameSettings.MENU_RECT_WIDTH,
                     GameSettings.HEIGHT,
                 ):
-                    menu_screen_running = False
+                    menu_screen_running: bool = False
                     pygame.quit()
 
                 elif menu_event.type == pygame.QUIT:
-                    menu_screen_running = False
+                    menu_screen_running : bool= False
                     pygame.quit()

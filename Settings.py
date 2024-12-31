@@ -7,23 +7,23 @@ class Settings:
     "Srarts up the settings tab, to set speed for the game "
 
     def __init__(self, screen: pygame.Surface) -> None:
-        self.image_handler = ImageHandlerII()
-        self.screen = screen
-        self.back_to_menu_button = Button(
+        self.image_handler: ImageHandlerII = ImageHandlerII()
+        self.screen: pygame.Surface = screen
+        self.back_to_menu_button: Button = Button(
             GameSettings.MENU_EXIT_GAME_BUTTON_X_POS,
             GameSettings.MENU_EXIT_GAME_BUTTON_Y_POS,
             "Back to Menu",
         )
 
-        self.quarter_speed_button = Button(GameSettings.MENU_RECT_WIDTH, GameSettings.MENU_RECT_HEIGHT + 5, "25% Speed")
-        self.normal_speed_button = Button(GameSettings.MENU_RECT_WIDTH * 2 + 5,GameSettings.MENU_RECT_HEIGHT + 5,"Normal Speed",)
-        self.double_speed_button = Button(
+        self.quarter_speed_button: Button = Button(GameSettings.MENU_RECT_WIDTH, GameSettings.MENU_RECT_HEIGHT + 5, "25% Speed")
+        self.normal_speed_button: Button = Button(GameSettings.MENU_RECT_WIDTH * 2 + 5,GameSettings.MENU_RECT_HEIGHT + 5,"Normal Speed",)
+        self.double_speed_button: Button = Button(
             GameSettings.MENU_RECT_WIDTH * 3 + 10,
             GameSettings.MENU_RECT_HEIGHT + 5,
             "200% Speed",
         )
-        self.screen = screen
-        self.image_handler = ImageHandlerII()
+        self.screen: pygame.Surface = screen
+        self.image_handler: ImageHandlerII = ImageHandlerII()
 
     def start(self):
         "Settings mode to set up speed"
@@ -32,10 +32,10 @@ class Settings:
         self.select_settings_options()
         pygame.display.flip()
 
-        settings_screen_running = True
+        settings_screen_running: bool = True
         while settings_screen_running:
-            settings_event = pygame.event.wait()
-            mouse_pressed = pygame.mouse.get_pressed()
+            settings_event: pygame.event.Event = pygame.event.wait()
+            mouse_pressed: tuple[bool, bool, bool] = pygame.mouse.get_pressed()
             if mouse_pressed == GameSettings.RIGHT_CLICK:
                 mouse_x, mouse_y = pygame.mouse.get_pos()
 
@@ -81,7 +81,7 @@ class Settings:
                     return
 
             elif settings_event.type == pygame.QUIT:
-                settings_screen_running = False
+                settings_screen_running: bool = False
                 self.screen.fill("black")
 
                 return
@@ -89,7 +89,7 @@ class Settings:
 
     def select_settings_options(self):
         "Select speed options in settings"
-        buttons = [
+        buttons: list[Button] = [
             self.quarter_speed_button,
             self.normal_speed_button,
             self.double_speed_button,
